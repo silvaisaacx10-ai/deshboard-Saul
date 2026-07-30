@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saul Elkind Retail Analytics | Senac Londrina</title>
+    <meta name="description" content="Dashboard interativo dos gargalos e tecnologias do comércio na Av. Saul Elkind em Londrina/PR.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js & Plugins via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Background Glow Blobs -->
+    <div class="bg-glow blob-1"></div>
+    <div class="bg-glow blob-2"></div>
+    <div class="bg-glow blob-3"></div>
+
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo-badge">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div>
+                    <h1 id="app-title">Av. Saul Elkind <span>Retail Analytics</span></h1>
+                    <p class="subtitle"><i class="fa-solid fa-graduation-cap"></i> Parceria Senac Londrina/PR &bull; Gargalos Operacionais e Oportunidades no Comércio Local</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-outline" id="btn-cloud-guide">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Publicar na Nuvem (Link Grátis)
+                </button>
+                <button class="btn btn-primary" id="btn-export-page" onclick="window.print()">
+                    <i class="fa-solid fa-file-pdf"></i> Imprimir / Salvar PDF
+                </button>
+                <button class="theme-toggle" id="theme-toggle-btn" title="Alternar Tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- KPI CARDS RIBBON -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-icon icon-blue"><i class="fa-solid fa-users"></i></div>
+                <div class="kpi-data">
+                    <span class="kpi-label">População Atendida</span>
+                    <h2 class="kpi-value">126.000 <small>hab</small></h2>
+                    <span class="kpi-tag tag-neutral"><i class="fa-solid fa-location-dot"></i> Zona Norte Londrina</span>
+                </div>
+            </div>
+            
+            <div class="kpi-card">
+                <div class="kpi-icon icon-purple"><i class="fa-solid fa-store"></i></div>
+                <div class="kpi-data">
+                    <span class="kpi-label">Empresas na Avenida</span>
+                    <h2 class="kpi-value">~500 <small>lojas</small></h2>
+                    <span class="kpi-tag tag-purple"><i class="fa-solid fa-bag-shopping"></i> Diversificação de mix</span>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon icon-emerald"><i class="fa-solid fa-robot"></i></div>
+                <div class="kpi-data">
+                    <span class="kpi-label">Redução de Ruptura (IA)</span>
+                    <h2 class="kpi-value">23.5% &rarr; 4.1%</h2>
+                    <span class="kpi-tag tag-success"><i class="fa-solid fa-arrow-trend-down"></i> -82.5% em perdas</span>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-icon icon-orange"><i class="fa-solid fa-fire-flame-curved"></i></div>
+                <div class="kpi-data">
+                    <span class="kpi-label">Pico de Tráfego Feira</span>
+                    <h2 class="kpi-value">35.000 <small>p/dia</small></h2>
+                    <span class="kpi-tag tag-orange"><i class="fa-solid fa-calendar-day"></i> Domingos no Cincão</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- NAVIGATION TABS -->
+        <nav class="nav-tabs-bar">
+            <button class="nav-tab active" data-tab="tab-all">
+                <i class="fa-solid fa-table-cells-large"></i> Visão Geral Completa
+            </button>
+            <button class="nav-tab" data-tab="tab-micro">
+                <i class="fa-solid fa-microscope"></i> Visão Micro (Gargalos das Lojas)
+            </button>
+            <button class="nav-tab" data-tab="tab-macro">
+                <i class="fa-solid fa-globe"></i> Visão Macro (Mercado & Avenida)
+            </button>
+            <button class="nav-tab" data-tab="tab-tables">
+                <i class="fa-solid fa-table"></i> Tabelas de Dados (Excel/CSV)
+            </button>
+        </nav>
+
+        <!-- MAIN DASHBOARD PANELS CONTENT -->
+        <main class="dashboard-content">
+            <!-- TAB 1: VISÃO GERAL COMPLETA (Grid dos 6 Painéis) -->
+            <div id="tab-all" class="tab-pane active">
+                <div class="charts-grid">
+                    <!-- PAINEL 1: ESTOQUE -->
+                    <div class="chart-card card-micro">
+                        <div class="card-header">
+                            <div>
+                                <span class="badge badge-micro">VISÃO MICRO #1</span>
+                                <h3>Gestão de Estoque x Tecnologia</h3>
+                            </div>
+                            <span class="tooltip-icon" title="Comparativo do Giro de Estoque (Dias) e a Ruptura por perfil de tecnologia nas lojas."><i class="fa-solid fa-circle-info"></i></span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chartEstoque"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- PAINEL 2: DEMANDA IA -->
+                    <div class="chart-card card-micro">
+                        <div class="card-header">
+                            <div>
+                                <span class="badge badge-micro">VISÃO MICRO #2</span>
+                                <h3>Previsão de Demanda com IA (12 Meses)</h3>
+                            </div>
+                            <span class="tooltip-icon" title="Previsão da IA vs Venda Real evidenciando os picos do 5º dia útil, frio rigoroso e Natal."><i class="fa-solid fa-circle-info"></i></span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chartDemanda"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- PAINEL 3: FUNIL META ADS -->
+                    <div class="chart-card card-micro">
+                        <div class="card-header">
+                            <div>
+                                <span class="badge badge-micro">VISÃO MICRO #3</span>
+                                <h3>Funil Meta Ads (Queima de Estoque 4km)</h3>
+                            </div>
+                            <span class="tooltip-icon" title="Etapas de conversão no raio de 4km para queima de estoque de vestuário de inverno."><i class="fa-solid fa-circle-info"></i></span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chartFunil"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- PAINEL 4: OMNICHANNEL & SLA -->
+                    <div class="chart-card card-micro">
+                        <div class="card-header">
+                            <div>
+                                <span class="badge badge-micro">VISÃO MICRO #4</span>
+                                <h3>Logística Omnichannel & SLA de Atendimento</h3>
+                            </div>
+                            <span class="tooltip-icon" title="Participação no faturamento por canal e tempo médio de resposta (SLA)."><i class="fa-solid fa-circle-info"></i></span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chartOmnichannel"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- PAINEL 5: SEGMENTOS DA AVENIDA -->
+                    <div class="chart-card card-macro">
+                        <div class="card-header">
+                            <div>
+                                <span class="badge badge-macro">VISÃO MACRO #5</span>
+                                <h3>Divisão por Segmento (As 500 Lojas)</h3>
+                            </div>
+                            <span class="tooltip-icon" title="Share financeiro (%) e margem de lucro média dos 5 motores do comércio da avenida."><i class="fa-solid fa-circle-info"></i></span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chartSegmentos"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- PAINEL 6: TRÁFEGO DE CONSUMIDORES -->
+                    <div class="chart-card card-macro">
+                        <div class="card-header">
+                            <div>
+                                <span class="badge badge-macro">VISÃO MACRO #6</span>
+                                <h3>Mapa de Tráfego de Consumidores (Pessoas/Dia)</h3>
+                            </div>
+                            <span class="tooltip-icon" title="Volume diário de consumidores nos 3 principais trechos da via ao longo da semana."><i class="fa-solid fa-circle-info"></i></span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chartTrafego"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: VISÃO MICRO -->
+            <div id="tab-micro" class="tab-pane">
+                <div class="section-intro">
+                    <h2><i class="fa-solid fa-store"></i> Visão Micro: Gargalos nas Lojas Varejistas</h2>
+                    <p>Análise detalhada do impacto da maturidade tecnológica, automação no WhatsApp e modelos preditivos nas operações cotidianas dos comerciantes da Saul Elkind.</p>
+                </div>
+                <div class="charts-grid-2x2">
+                    <div class="chart-card card-micro">
+                        <div class="card-header">
+                            <div>
+                                <span class="badge badge-micro">VISÃO MICRO #1</span>
+                                <h3>Gestão de Estoque x Tecnologia</h3>
+                            </div>
+                            <span class="tooltip-icon" title="Comparativo do Giro de Estoque (Dias) e a Ruptura por perfil de tecnologia nas lojas."><i class="fa-solid fa-circle-info"></i></span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chartEstoqueMicro"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card card-micro">
+                        <div class="card-header">
+                            <div>
+                                <span class="badge badge-micro">VISÃO MICRO #2</span>
+                                <h3>Previsão de Demanda com IA (12 Meses)</h3>
+                            </div>
+                            <span class="tooltip-icon" title="Previsão da IA vs Venda Real evidenciando os picos do 5º dia útil, frio rigoroso e Natal."><i class="fa-solid fa-circle-info"></i></span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chartDemandaMicro"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card card-micro">
+                        <div class="card-header">
+                            <div>
+                                <span class="badge badge-micro">VISÃO MICRO #3</span>
+                                <h3>Funil Meta Ads (Queima de Estoque 4km)</h3>
+                            </div>
+                            <span class="tooltip-icon" title="Etapas de conversão no raio de 4km para queima de estoque de vestuário de inverno."><i class="fa-solid fa-circle-info"></i></span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chartFunilMicro"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card card-micro">
+                        <div class="card-header">
+                            <div>
+                                <span class="badge badge-micro">VISÃO MICRO #4</span>
+                                <h3>Logística Omnichannel & SLA de Atendimento</h3>
+                            </div>
+                            <span class="tooltip-icon" title="Participação no faturamento por canal e tempo médio de resposta (SLA)."><i class="fa-solid fa-circle-info"></i></span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chartOmnichannelMicro"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: VISÃO MACRO -->
+            <div id="tab-macro" class="tab-pane">
+                <div class="section-intro">
+                    <h2><i class="fa-solid fa-city"></i> Visão Macro: Estrutura & Mercado da Avenida</h2>
+                    <p>Mapeamento geoeconômico, share de faturamento dos 5 motores da avenida e comportamento do fluxo de mais de 126 mil moradores da Zona Norte.</p>
+                </div>
+                <div class="charts-grid-2x2">
+                    <div class="chart-card card-macro">
+                        <div class="card-header">
+                            <div>
+                                <span class="badge badge-macro">VISÃO MACRO #5</span>
+                                <h3>Divisão por Segmento (As 500 Lojas)</h3>
+                            </div>
+                            <span class="tooltip-icon" title="Share financeiro (%) e margem de lucro média dos 5 motores do comércio da avenida."><i class="fa-solid fa-circle-info"></i></span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chartSegmentosMacro"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card card-macro">
+                        <div class="card-header">
+                            <div>
+                                <span class="badge badge-macro">VISÃO MACRO #6</span>
+                                <h3>Mapa de Tráfego de Consumidores (Pessoas/Dia)</h3>
+                            </div>
+                            <span class="tooltip-icon" title="Volume diário de consumidores nos 3 principais trechos da via ao longo da semana."><i class="fa-solid fa-circle-info"></i></span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chartTrafegoMacro"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: TABELAS DE DADOS EXPORTÁVEIS -->
+            <div id="tab-tables" class="tab-pane">
+                <div class="tables-header-bar">
+                    <div>
+                        <h2><i class="fa-solid fa-database"></i> Tabelas de Dados Estruturadas</h2>
+                        <p>Copie diretamente para o Excel ou baixe os arquivos CSV formatados.</p>
+                    </div>
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="table-search" placeholder="Filtrar dados da tabela...">
+                    </div>
+                </div>
+
+                <div class="tables-container" id="tables-list">
+                    <!-- Dynamically populated via JS -->
+                </div>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="app-footer">
+            <p><strong>Projeto de Pesquisa em Parceria com Alunos de Administração do Senac Londrina/PR</strong> &bull; Análise de Gargalos e Tecnologia no Comércio da Av. Saul Elkind</p>
+            <p class="credits"><i class="fa-solid fa-code"></i> Desenvolvido com Antigravity Retail Engine | Dados formatados para Excel, Power BI e Web</p>
+        </footer>
+    </div>
+
+    <!-- MODAL GUIDE: CLOUD DEPLOYMENT -->
+    <div class="modal-backdrop" id="cloud-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-cloud-arrow-up"></i> Como Publicar este Dashboard Gratuitamente na Nuvem</h3>
+                <button class="modal-close" id="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Para gerar um <strong>link público (HTTPS)</strong> para acessar este Dashboard de qualquer celular, tablet ou computador do Senac sem precisar de servidor pago, escolha uma das opções gratuitas abaixo:</p>
+                
+                <div class="guide-steps">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h4>Opção A: Vercel (Recomendado - 1 Minuto)</h4>
+                            <p>1. Crie uma conta gratuita em <a href="https://vercel.com" target="_blank">vercel.com</a>.</p>
+                            <p>2. Arraste a pasta deste projeto <code>saul_elkind_web_dashboard</code> para a tela da Vercel.</p>
+                            <p>3. Clique em <strong>Deploy</strong>. Você receberá um link como <code>https://saul-elkind-senac.vercel.app</code>.</p>
+                        </div>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h4>Opção B: Netlify Drop (Sem Instalação)</h4>
+                            <p>1. Acesse <a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a>.</p>
+                            <p>2. Arraste a pasta do projeto para a caixa de upload.</p>
+                            <p>3. Seu site estará no ar instantaneamente com link público!</p>
+                        </div>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h4>Opção C: GitHub Pages</h4>
+                            <p>1. Suba este projeto para um repositório público no GitHub.</p>
+                            <p>2. Vá nas configurações do repositório em <strong>Pages</strong> e selecione a branch <code>main</code>.</p>
+                            <p>3. Acesse em <code>https://seu-usuario.github.io/saul-elkind-dashboard</code>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="document.getElementById('cloud-modal').classList.remove('active')">Entendido!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
