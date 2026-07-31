@@ -22,16 +22,19 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
     <!-- Background Glow Blobs -->
-    <div class="bg-glow blob-1"></div>
-    <div class="bg-glow blob-2"></div>
-    <div class="bg-glow blob-3"></div>
+    <div class="bg-glow blob-1" aria-hidden="true"></div>
+    <div class="bg-glow blob-2" aria-hidden="true"></div>
+    <div class="bg-glow blob-3" aria-hidden="true"></div>
 
     <div class="app-container">
         <!-- HEADER -->
-        <header class="app-header">
+        <header class="app-header" role="banner">
             <div class="header-left">
-                <div class="logo-badge">
+                <div class="logo-badge" aria-hidden="true">
                     <i class="fa-solid fa-chart-line"></i>
                 </div>
                 <div>
@@ -40,40 +43,40 @@
                 </div>
             </div>
             <div class="header-right">
-                <button class="btn btn-outline" id="btn-cloud-guide">
+                <button class="btn btn-outline" id="btn-cloud-guide" aria-label="Abrir guia de publicação na nuvem">
                     <i class="fa-solid fa-cloud-arrow-up"></i> Publicar na Nuvem (Link Grátis)
                 </button>
-                <button class="btn btn-primary" id="btn-export-page" onclick="window.print()">
+                <button class="btn btn-primary" id="btn-export-page" onclick="window.print()" aria-label="Imprimir relatório ou salvar em PDF">
                     <i class="fa-solid fa-file-pdf"></i> Imprimir / Salvar PDF
                 </button>
-                <button class="theme-toggle" id="theme-toggle-btn" title="Alternar Tema">
+                <button class="theme-toggle" id="theme-toggle-btn" title="Alternar Tema (Escuro/Claro)" aria-label="Alternar tema visual">
                     <i class="fa-solid fa-moon"></i>
                 </button>
             </div>
         </header>
 
-        <!-- KPI CARDS RIBBON -->
-        <section class="kpi-grid">
-            <div class="kpi-card">
-                <div class="kpi-icon icon-blue"><i class="fa-solid fa-users"></i></div>
+        <!-- KPI CARDS RIBBON WITH TREND INDICATORS -->
+        <section class="kpi-grid" aria-label="Indicadores-Chave de Desempenho (KPIs)">
+            <div class="kpi-card" tabindex="0">
+                <div class="kpi-icon icon-blue" aria-hidden="true"><i class="fa-solid fa-users"></i></div>
                 <div class="kpi-data">
                     <span class="kpi-label">População Atendida</span>
                     <h2 class="kpi-value">126.000 <small>hab</small></h2>
-                    <span class="kpi-tag tag-neutral"><i class="fa-solid fa-location-dot"></i> Zona Norte Londrina</span>
+                    <span class="kpi-tag tag-neutral"><i class="fa-solid fa-arrow-trend-up"></i> +4.2% vs ano anterior</span>
                 </div>
             </div>
             
-            <div class="kpi-card">
-                <div class="kpi-icon icon-purple"><i class="fa-solid fa-store"></i></div>
+            <div class="kpi-card" tabindex="0">
+                <div class="kpi-icon icon-purple" aria-hidden="true"><i class="fa-solid fa-store"></i></div>
                 <div class="kpi-data">
                     <span class="kpi-label">Empresas na Avenida</span>
                     <h2 class="kpi-value">~500 <small>lojas</small></h2>
-                    <span class="kpi-tag tag-purple"><i class="fa-solid fa-bag-shopping"></i> Diversificação de mix</span>
+                    <span class="kpi-tag tag-purple"><i class="fa-solid fa-bag-shopping"></i> Alta diversificação</span>
                 </div>
             </div>
 
-            <div class="kpi-card">
-                <div class="kpi-icon icon-emerald"><i class="fa-solid fa-robot"></i></div>
+            <div class="kpi-card" tabindex="0">
+                <div class="kpi-icon icon-emerald" aria-hidden="true"><i class="fa-solid fa-robot"></i></div>
                 <div class="kpi-data">
                     <span class="kpi-label">Redução de Ruptura (IA)</span>
                     <h2 class="kpi-value">23.5% &rarr; 4.1%</h2>
@@ -81,36 +84,52 @@
                 </div>
             </div>
 
-            <div class="kpi-card">
-                <div class="kpi-icon icon-orange"><i class="fa-solid fa-fire-flame-curved"></i></div>
+            <div class="kpi-card" tabindex="0">
+                <div class="kpi-icon icon-orange" aria-hidden="true"><i class="fa-solid fa-fire-flame-curved"></i></div>
                 <div class="kpi-data">
                     <span class="kpi-label">Pico de Tráfego Feira</span>
                     <h2 class="kpi-value">35.000 <small>p/dia</small></h2>
-                    <span class="kpi-tag tag-orange"><i class="fa-solid fa-calendar-day"></i> Domingos no Cincão</span>
+                    <span class="kpi-tag tag-orange"><i class="fa-solid fa-calendar-day"></i> +141% aos domingos</span>
                 </div>
             </div>
         </section>
 
+        <!-- DYNAMIC FILTER CONTROL BAR -->
+        <div class="filter-control-bar">
+            <div class="filter-group">
+                <label for="period-filter-select"><i class="fa-solid fa-filter"></i> Filtrar Período de Demanda:</label>
+                <select id="period-filter-select" class="custom-select" aria-label="Selecione o período de análise">
+                    <option value="todos">Ano Completo (12 Meses)</option>
+                    <option value="semestre1">1º Semestre (Jan - Jun)</option>
+                    <option value="semestre2">2º Semestre (Jul - Dez)</option>
+                    <option value="picos">Apenas Meses de Pico (Festas & Inverno)</option>
+                </select>
+            </div>
+            <div class="filter-status" id="filter-status-badge">
+                <span class="status-indicator"></span> Exibindo dados completos (2025/2026)
+            </div>
+        </div>
+
         <!-- NAVIGATION TABS -->
-        <nav class="nav-tabs-bar">
-            <button class="nav-tab active" data-tab="tab-all">
+        <nav class="nav-tabs-bar" role="tablist" aria-label="Navegação do Dashboard">
+            <button class="nav-tab active" role="tab" aria-selected="true" aria-controls="tab-all" id="tab-all-btn" data-tab="tab-all">
                 <i class="fa-solid fa-table-cells-large"></i> Visão Geral Completa
             </button>
-            <button class="nav-tab" data-tab="tab-micro">
+            <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-micro" id="tab-micro-btn" data-tab="tab-micro">
                 <i class="fa-solid fa-microscope"></i> Visão Micro (Gargalos das Lojas)
             </button>
-            <button class="nav-tab" data-tab="tab-macro">
+            <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-macro" id="tab-macro-btn" data-tab="tab-macro">
                 <i class="fa-solid fa-globe"></i> Visão Macro (Mercado & Avenida)
             </button>
-            <button class="nav-tab" data-tab="tab-tables">
+            <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-tables" id="tab-tables-btn" data-tab="tab-tables">
                 <i class="fa-solid fa-table"></i> Tabelas de Dados (Excel/CSV)
             </button>
         </nav>
 
         <!-- MAIN DASHBOARD PANELS CONTENT -->
-        <main class="dashboard-content">
+        <main class="dashboard-content" id="main-content">
             <!-- TAB 1: VISÃO GERAL COMPLETA (Grid dos 6 Painéis) -->
-            <div id="tab-all" class="tab-pane active">
+            <div id="tab-all" class="tab-pane active" role="tabpanel" aria-labelledby="tab-all-btn">
                 <div class="charts-grid">
                     <!-- PAINEL 1: ESTOQUE -->
                     <div class="chart-card card-micro">
@@ -119,10 +138,15 @@
                                 <span class="badge badge-micro">VISÃO MICRO #1</span>
                                 <h3>Gestão de Estoque x Tecnologia</h3>
                             </div>
-                            <span class="tooltip-icon" title="Comparativo do Giro de Estoque (Dias) e a Ruptura por perfil de tecnologia nas lojas."><i class="fa-solid fa-circle-info"></i></span>
+                            <div class="card-header-actions">
+                                <button class="btn-icon" onclick="exportChartAsPNG('chartEstoque', 'gestao_estoque')" title="Baixar Gráfico em PNG" aria-label="Exportar gráfico de gestão de estoque em PNG">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                                <span class="tooltip-icon" title="Comparativo do Giro de Estoque (Dias) e a Ruptura por perfil de tecnologia nas lojas."><i class="fa-solid fa-circle-info"></i></span>
+                            </div>
                         </div>
                         <div class="chart-wrapper">
-                            <canvas id="chartEstoque"></canvas>
+                            <canvas id="chartEstoque" aria-label="Gráfico comparativo de giro de estoque e ruptura por perfil de tecnologia"></canvas>
                         </div>
                     </div>
 
@@ -133,10 +157,15 @@
                                 <span class="badge badge-micro">VISÃO MICRO #2</span>
                                 <h3>Previsão de Demanda com IA (12 Meses)</h3>
                             </div>
-                            <span class="tooltip-icon" title="Previsão da IA vs Venda Real evidenciando os picos do 5º dia útil, frio rigoroso e Natal."><i class="fa-solid fa-circle-info"></i></span>
+                            <div class="card-header-actions">
+                                <button class="btn-icon" onclick="exportChartAsPNG('chartDemanda', 'previsao_demanda_ia')" title="Baixar Gráfico em PNG" aria-label="Exportar gráfico de previsão de demanda em PNG">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                                <span class="tooltip-icon" title="Previsão da IA vs Venda Real evidenciando os picos do 5º dia útil, frio rigoroso e Natal."><i class="fa-solid fa-circle-info"></i></span>
+                            </div>
                         </div>
                         <div class="chart-wrapper">
-                            <canvas id="chartDemanda"></canvas>
+                            <canvas id="chartDemanda" aria-label="Gráfico de previsão de demanda com IA versus venda real"></canvas>
                         </div>
                     </div>
 
@@ -147,10 +176,15 @@
                                 <span class="badge badge-micro">VISÃO MICRO #3</span>
                                 <h3>Funil Meta Ads (Queima de Estoque 4km)</h3>
                             </div>
-                            <span class="tooltip-icon" title="Etapas de conversão no raio de 4km para queima de estoque de vestuário de inverno."><i class="fa-solid fa-circle-info"></i></span>
+                            <div class="card-header-actions">
+                                <button class="btn-icon" onclick="exportChartAsPNG('chartFunil', 'funil_meta_ads')" title="Baixar Gráfico em PNG" aria-label="Exportar gráfico de funil meta ads em PNG">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                                <span class="tooltip-icon" title="Etapas de conversão no raio de 4km para queima de estoque de vestuário de inverno."><i class="fa-solid fa-circle-info"></i></span>
+                            </div>
                         </div>
                         <div class="chart-wrapper">
-                            <canvas id="chartFunil"></canvas>
+                            <canvas id="chartFunil" aria-label="Gráfico de funil de vendas do Meta Ads"></canvas>
                         </div>
                     </div>
 
@@ -161,10 +195,15 @@
                                 <span class="badge badge-micro">VISÃO MICRO #4</span>
                                 <h3>Logística Omnichannel & SLA de Atendimento</h3>
                             </div>
-                            <span class="tooltip-icon" title="Participação no faturamento por canal e tempo médio de resposta (SLA)."><i class="fa-solid fa-circle-info"></i></span>
+                            <div class="card-header-actions">
+                                <button class="btn-icon" onclick="exportChartAsPNG('chartOmnichannel', 'logistica_omnichannel')" title="Baixar Gráfico em PNG" aria-label="Exportar gráfico omnichannel em PNG">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                                <span class="tooltip-icon" title="Participação no faturamento por canal e tempo médio de resposta (SLA)."><i class="fa-solid fa-circle-info"></i></span>
+                            </div>
                         </div>
                         <div class="chart-wrapper">
-                            <canvas id="chartOmnichannel"></canvas>
+                            <canvas id="chartOmnichannel" aria-label="Gráfico de distribuição omnichannel e tempo médio de resposta"></canvas>
                         </div>
                     </div>
 
@@ -175,10 +214,15 @@
                                 <span class="badge badge-macro">VISÃO MACRO #5</span>
                                 <h3>Divisão por Segmento (As 500 Lojas)</h3>
                             </div>
-                            <span class="tooltip-icon" title="Share financeiro (%) e margem de lucro média dos 5 motores do comércio da avenida."><i class="fa-solid fa-circle-info"></i></span>
+                            <div class="card-header-actions">
+                                <button class="btn-icon" onclick="exportChartAsPNG('chartSegmentos', 'divisao_segmentos')" title="Baixar Gráfico em PNG" aria-label="Exportar gráfico de segmentos em PNG">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                                <span class="tooltip-icon" title="Share financeiro (%) e margem de lucro média dos 5 motores do comércio da avenida."><i class="fa-solid fa-circle-info"></i></span>
+                            </div>
                         </div>
                         <div class="chart-wrapper">
-                            <canvas id="chartSegmentos"></canvas>
+                            <canvas id="chartSegmentos" aria-label="Gráfico de divisão por segmento comercial da avenida"></canvas>
                         </div>
                     </div>
 
@@ -189,17 +233,22 @@
                                 <span class="badge badge-macro">VISÃO MACRO #6</span>
                                 <h3>Mapa de Tráfego de Consumidores (Pessoas/Dia)</h3>
                             </div>
-                            <span class="tooltip-icon" title="Volume diário de consumidores nos 3 principais trechos da via ao longo da semana."><i class="fa-solid fa-circle-info"></i></span>
+                            <div class="card-header-actions">
+                                <button class="btn-icon" onclick="exportChartAsPNG('chartTrafego', 'mapa_trafego')" title="Baixar Gráfico em PNG" aria-label="Exportar gráfico de tráfego em PNG">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                                <span class="tooltip-icon" title="Volume diário de consumidores nos 3 principais trechos da via ao longo da semana."><i class="fa-solid fa-circle-info"></i></span>
+                            </div>
                         </div>
                         <div class="chart-wrapper">
-                            <canvas id="chartTrafego"></canvas>
+                            <canvas id="chartTrafego" aria-label="Gráfico de mapa de tráfego de consumidores"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- TAB 2: VISÃO MICRO -->
-            <div id="tab-micro" class="tab-pane">
+            <div id="tab-micro" class="tab-pane" role="tabpanel" aria-labelledby="tab-micro-btn">
                 <div class="section-intro">
                     <h2><i class="fa-solid fa-store"></i> Visão Micro: Gargalos nas Lojas Varejistas</h2>
                     <p>Análise detalhada do impacto da maturidade tecnológica, automação no WhatsApp e modelos preditivos nas operações cotidianas dos comerciantes da Saul Elkind.</p>
@@ -211,7 +260,12 @@
                                 <span class="badge badge-micro">VISÃO MICRO #1</span>
                                 <h3>Gestão de Estoque x Tecnologia</h3>
                             </div>
-                            <span class="tooltip-icon" title="Comparativo do Giro de Estoque (Dias) e a Ruptura por perfil de tecnologia nas lojas."><i class="fa-solid fa-circle-info"></i></span>
+                            <div class="card-header-actions">
+                                <button class="btn-icon" onclick="exportChartAsPNG('chartEstoqueMicro', 'gestao_estoque_micro')" title="Baixar Gráfico em PNG" aria-label="Exportar gráfico em PNG">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                                <span class="tooltip-icon" title="Comparativo do Giro de Estoque (Dias) e a Ruptura por perfil de tecnologia nas lojas."><i class="fa-solid fa-circle-info"></i></span>
+                            </div>
                         </div>
                         <div class="chart-wrapper">
                             <canvas id="chartEstoqueMicro"></canvas>
@@ -224,7 +278,12 @@
                                 <span class="badge badge-micro">VISÃO MICRO #2</span>
                                 <h3>Previsão de Demanda com IA (12 Meses)</h3>
                             </div>
-                            <span class="tooltip-icon" title="Previsão da IA vs Venda Real evidenciando os picos do 5º dia útil, frio rigoroso e Natal."><i class="fa-solid fa-circle-info"></i></span>
+                            <div class="card-header-actions">
+                                <button class="btn-icon" onclick="exportChartAsPNG('chartDemandaMicro', 'previsao_demanda_micro')" title="Baixar Gráfico em PNG" aria-label="Exportar gráfico em PNG">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                                <span class="tooltip-icon" title="Previsão da IA vs Venda Real evidenciando os picos do 5º dia útil, frio rigoroso e Natal."><i class="fa-solid fa-circle-info"></i></span>
+                            </div>
                         </div>
                         <div class="chart-wrapper">
                             <canvas id="chartDemandaMicro"></canvas>
@@ -237,7 +296,12 @@
                                 <span class="badge badge-micro">VISÃO MICRO #3</span>
                                 <h3>Funil Meta Ads (Queima de Estoque 4km)</h3>
                             </div>
-                            <span class="tooltip-icon" title="Etapas de conversão no raio de 4km para queima de estoque de vestuário de inverno."><i class="fa-solid fa-circle-info"></i></span>
+                            <div class="card-header-actions">
+                                <button class="btn-icon" onclick="exportChartAsPNG('chartFunilMicro', 'funil_meta_ads_micro')" title="Baixar Gráfico em PNG" aria-label="Exportar gráfico em PNG">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                                <span class="tooltip-icon" title="Etapas de conversão no raio de 4km para queima de estoque de vestuário de inverno."><i class="fa-solid fa-circle-info"></i></span>
+                            </div>
                         </div>
                         <div class="chart-wrapper">
                             <canvas id="chartFunilMicro"></canvas>
@@ -250,7 +314,12 @@
                                 <span class="badge badge-micro">VISÃO MICRO #4</span>
                                 <h3>Logística Omnichannel & SLA de Atendimento</h3>
                             </div>
-                            <span class="tooltip-icon" title="Participação no faturamento por canal e tempo médio de resposta (SLA)."><i class="fa-solid fa-circle-info"></i></span>
+                            <div class="card-header-actions">
+                                <button class="btn-icon" onclick="exportChartAsPNG('chartOmnichannelMicro', 'logistica_omnichannel_micro')" title="Baixar Gráfico em PNG" aria-label="Exportar gráfico em PNG">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                                <span class="tooltip-icon" title="Participação no faturamento por canal e tempo médio de resposta (SLA)."><i class="fa-solid fa-circle-info"></i></span>
+                            </div>
                         </div>
                         <div class="chart-wrapper">
                             <canvas id="chartOmnichannelMicro"></canvas>
@@ -260,7 +329,7 @@
             </div>
 
             <!-- TAB 3: VISÃO MACRO -->
-            <div id="tab-macro" class="tab-pane">
+            <div id="tab-macro" class="tab-pane" role="tabpanel" aria-labelledby="tab-macro-btn">
                 <div class="section-intro">
                     <h2><i class="fa-solid fa-city"></i> Visão Macro: Estrutura & Mercado da Avenida</h2>
                     <p>Mapeamento geoeconômico, share de faturamento dos 5 motores da avenida e comportamento do fluxo de mais de 126 mil moradores da Zona Norte.</p>
@@ -272,7 +341,12 @@
                                 <span class="badge badge-macro">VISÃO MACRO #5</span>
                                 <h3>Divisão por Segmento (As 500 Lojas)</h3>
                             </div>
-                            <span class="tooltip-icon" title="Share financeiro (%) e margem de lucro média dos 5 motores do comércio da avenida."><i class="fa-solid fa-circle-info"></i></span>
+                            <div class="card-header-actions">
+                                <button class="btn-icon" onclick="exportChartAsPNG('chartSegmentosMacro', 'divisao_segmentos_macro')" title="Baixar Gráfico em PNG" aria-label="Exportar gráfico em PNG">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                                <span class="tooltip-icon" title="Share financeiro (%) e margem de lucro média dos 5 motores do comércio da avenida."><i class="fa-solid fa-circle-info"></i></span>
+                            </div>
                         </div>
                         <div class="chart-wrapper">
                             <canvas id="chartSegmentosMacro"></canvas>
@@ -285,7 +359,12 @@
                                 <span class="badge badge-macro">VISÃO MACRO #6</span>
                                 <h3>Mapa de Tráfego de Consumidores (Pessoas/Dia)</h3>
                             </div>
-                            <span class="tooltip-icon" title="Volume diário de consumidores nos 3 principais trechos da via ao longo da semana."><i class="fa-solid fa-circle-info"></i></span>
+                            <div class="card-header-actions">
+                                <button class="btn-icon" onclick="exportChartAsPNG('chartTrafegoMacro', 'mapa_trafego_macro')" title="Baixar Gráfico em PNG" aria-label="Exportar gráfico em PNG">
+                                    <i class="fa-solid fa-download"></i>
+                                </button>
+                                <span class="tooltip-icon" title="Volume diário de consumidores nos 3 principais trechos da via ao longo da semana."><i class="fa-solid fa-circle-info"></i></span>
+                            </div>
                         </div>
                         <div class="chart-wrapper">
                             <canvas id="chartTrafegoMacro"></canvas>
@@ -295,15 +374,15 @@
             </div>
 
             <!-- TAB 4: TABELAS DE DADOS EXPORTÁVEIS -->
-            <div id="tab-tables" class="tab-pane">
+            <div id="tab-tables" class="tab-pane" role="tabpanel" aria-labelledby="tab-tables-btn">
                 <div class="tables-header-bar">
                     <div>
                         <h2><i class="fa-solid fa-database"></i> Tabelas de Dados Estruturadas</h2>
                         <p>Copie diretamente para o Excel ou baixe os arquivos CSV formatados.</p>
                     </div>
                     <div class="search-box">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" id="table-search" placeholder="Filtrar dados da tabela...">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                        <input type="text" id="table-search" placeholder="Filtrar dados da tabela..." aria-label="Filtrar linhas da tabela de dados">
                     </div>
                 </div>
 
@@ -314,18 +393,18 @@
         </main>
 
         <!-- FOOTER -->
-        <footer class="app-footer">
+        <footer class="app-footer" role="contentinfo">
             <p><strong>Projeto de Pesquisa em Parceria com Alunos de Administração do Senac Londrina/PR</strong> &bull; Análise de Gargalos e Tecnologia no Comércio da Av. Saul Elkind</p>
             <p class="credits"><i class="fa-solid fa-code"></i> Desenvolvido com Antigravity Retail Engine | Dados formatados para Excel, Power BI e Web</p>
         </footer>
     </div>
 
     <!-- MODAL GUIDE: CLOUD DEPLOYMENT -->
-    <div class="modal-backdrop" id="cloud-modal">
+    <div class="modal-backdrop" id="cloud-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div class="modal-box">
             <div class="modal-header">
-                <h3><i class="fa-solid fa-cloud-arrow-up"></i> Como Publicar este Dashboard Gratuitamente na Nuvem</h3>
-                <button class="modal-close" id="modal-close-btn">&times;</button>
+                <h3 id="modal-title"><i class="fa-solid fa-cloud-arrow-up"></i> Como Publicar este Dashboard Gratuitamente na Nuvem</h3>
+                <button class="modal-close" id="modal-close-btn" aria-label="Fechar janela modal">&times;</button>
             </div>
             <div class="modal-body">
                 <p>Para gerar um <strong>link público (HTTPS)</strong> para acessar este Dashboard de qualquer celular, tablet ou computador do Senac sem precisar de servidor pago, escolha uma das opções gratuitas abaixo:</p>
@@ -335,7 +414,7 @@
                         <div class="step-number">1</div>
                         <div>
                             <h4>Opção A: Vercel (Recomendado - 1 Minuto)</h4>
-                            <p>1. Crie uma conta gratuita em <a href="https://vercel.com" target="_blank">vercel.com</a>.</p>
+                            <p>1. Crie uma conta gratuita em <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a>.</p>
                             <p>2. Arraste a pasta deste projeto <code>saul_elkind_web_dashboard</code> para a tela da Vercel.</p>
                             <p>3. Clique em <strong>Deploy</strong>. Você receberá um link como <code>https://saul-elkind-senac.vercel.app</code>.</p>
                         </div>
@@ -345,7 +424,7 @@
                         <div class="step-number">2</div>
                         <div>
                             <h4>Opção B: Netlify Drop (Sem Instalação)</h4>
-                            <p>1. Acesse <a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a>.</p>
+                            <p>1. Acesse <a href="https://app.netlify.com/drop" target="_blank" rel="noopener">app.netlify.com/drop</a>.</p>
                             <p>2. Arraste a pasta do projeto para a caixa de upload.</p>
                             <p>3. Seu site estará no ar instantaneamente com link público!</p>
                         </div>
